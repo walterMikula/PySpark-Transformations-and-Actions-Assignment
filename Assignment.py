@@ -51,7 +51,7 @@ words_rdd = sentences_rdd.flatMap(lambda sentence: sentence.split())
 
 
 #count total number of words
-total_words = words_rdd.count
+total_words = words_rdd.count()
 
 print("\n TOTAL NUMBER OF WORDS")
 print(total_words)
@@ -97,13 +97,13 @@ revenue_rdd = sc.parallelize(revenue_data)
 total_revenue = revenue_rdd.reduceByKey(lambda x, y: x + y)
 
 # display revenue results
-print("\n TOTAL REVENUE PER PRODCUT:")
+print("\n TOTAL REVENUE PER PRODUCT:")
 print(total_revenue.collect())
 
 # max will return the pair with highest revenue, and key compares the pairs
-highest_grossing = revenue_rdd.max(key=lambda pair: pair[1])
+highest_grossing = total_revenue.max(key=lambda pair: pair[1])
 
 print("\n HIGHEST-GROSSING PRODUCT")
 print(highest_grossing)
 
-sc.stop
+sc.stop()
