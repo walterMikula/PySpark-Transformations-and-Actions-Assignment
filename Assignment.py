@@ -100,4 +100,10 @@ total_revenue = revenue_rdd.reduceByKey(lambda x, y: x + y)
 print("\n TOTAL REVENUE PER PRODCUT:")
 print(total_revenue.collect())
 
-#
+# max will return the pair with highest revenue, and key compares the pairs
+highest_grossing = revenue_rdd.max(key=lambda pair: pair[1])
+
+print("\n HIGHEST-GROSSING PRODUCT")
+print(highest_grossing)
+
+sc.stop
