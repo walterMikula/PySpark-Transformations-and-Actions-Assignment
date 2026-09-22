@@ -17,7 +17,7 @@ def categorize_age(ages):
     else:
         return "senior"
 
-# applyiong categorize funtion to ever age
+# applying categorize function to every age
 age_categories = ages_rdd.map(categorize_age)
 
 # count how many times each category appears
@@ -46,11 +46,11 @@ sentences = [
 # creating rdd for sentences
 sentences_rdd = sc.parallelize(sentences)
 
-# using flatmap to split each sentence into words ad creating an rdd wiht each individual word
+# using flatmap to split each sentence into words and creating an RDD with each individual word
 words_rdd = sentences_rdd.flatMap(lambda sentence: sentence.split())
 
 
-#count total jnjumber of words
+#count total number of words
 total_words = words_rdd.count
 
 print("\n TOTAL NUMBER OF WORDS")
@@ -90,13 +90,13 @@ revenue_data = [
     ("shirt", 20)
 ]
 
-#creating an rdd from revenue data
+#creating an RDD from revenue data
 revenue_rdd = sc.parallelize(revenue_data)
 
-# cp,bones revenue calues for the same product
+# cp,bones revenue values for the same product
 total_revenue = revenue_rdd.reduceByKey(lambda x, y: x + y)
 
-#display reveneu results
+# display revenue results
 print("\n TOTAL REVENUE PER PRODCUT:")
 print(total_revenue.collect())
 
