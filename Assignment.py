@@ -2,14 +2,14 @@ from pyspark import SparkContext
 
 ## TASK 1
 ## CREATE RDD from [15, 22, 35, 42, 60, 18, 27, 19, 75, 29]
-sc.SparkContext("local[*]", "RDD Practice")
+sc = SparkContext("local[*]", "RDD Practice")
 
 ages = [15, 22, 35, 42, 60, 18, 27, 19, 75, 29]
 
 ages_rdd = sc.parallelize(ages)
 
 # assigning an age category
-def categorize_age(ages):
+def categorize_age(age):
     if age < 18:
         return "minor"
     elif age < 65: 
@@ -61,7 +61,7 @@ print(total_words)
 word_pairs = words_rdd.map(lambda word: (word, 1))
 
 #adds values that are the same word
-word_frequencies = word_pairs.rteduceByKey(lambda x, y: x + y)
+word_frequencies = word_pairs.reduceByKey(lambda x, y: x + y)
 
 positive_words =[
     "love",
