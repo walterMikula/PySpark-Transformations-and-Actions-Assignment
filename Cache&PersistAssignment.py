@@ -43,6 +43,9 @@ start = time.time()
 cache_count2 = cache_df.count()
 cache_time2 = time.time() - start
 
+cache_storage = str(cache_df.storageLevel)
+
+
 print("\nCACHE RESULTS:")
 print("Count:", cache_count1)
 print(f"First execution time: {cache_time1:.4f} seconds")
@@ -67,10 +70,13 @@ start = time.time()
 persist_count2 = persist_df.count()
 persist_time2 = time.time() - start
 
+persist_storage = str(persist_df.storageLevel)
+
 print("\nPERSIST RESULTS:")
 print("Count:", persist_count1)
 print(f"First execution time: {persist_time1:.4f} seconds")
 print(f"Second execution time: {persist_time2:.4f} seconds")
+
 print("Storage Level:", persist_df.storageLevel)
 
 
@@ -85,10 +91,10 @@ print(f"Persist first execution:  {persist_time1:.4f} seconds")
 print(f"Persist second execution: {persist_time2:.4f} seconds")
 
 print("\nCache Storage Level:")
-print(cache_df.storageLevel)
+print(cache_storage)
 
 print("\nPersist Storage Level:")
-print(persist_df.storageLevel)
+print(persist_storage)
 
 ## STEP 6 Clean-up
 persist_df.unpersist()
