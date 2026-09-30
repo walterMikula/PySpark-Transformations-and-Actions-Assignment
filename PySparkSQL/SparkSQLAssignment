@@ -1,0 +1,95 @@
+from pyspark.sql import SparkSession
+
+
+# Create SparkSession
+spark = SparkSession.builder \
+    .appName("PySpark SQL Assignment") \
+    .getOrCreate()
+
+
+# STEP 1: LOAD AND PREPARE
+
+
+# Load orders.csv into a DataFrame
+orders_df = spark.read.csv(
+    "orders.csv",
+    header=True,
+    inferSchema=True
+)
+
+# Register the DataFrame as a temporary SQL view
+orders_df.createOrReplaceTempView("orders")
+
+# Verify that the temporary view can be queried
+print("\n ALL ORDERS ")
+spark.sql("""
+    SELECT *
+    FROM orders
+""").show()
+
+
+# STEP 2: BASIC SQL
+
+# Query 1: Select all records
+print("\n ALL RECORDS ")
+spark.sql("""
+    SELECT *
+    FROM orders
+""").show()
+
+
+# Query 2: Return only shipped orders
+print("\n SHIPPED ORDERS ")
+spark.sql("""
+    SELECT *
+    FROM orders
+    WHERE status = 'shipped'
+""").show()
+
+
+# Query 3: Calculate total order amount for each customer
+print("\n TOTAL ORDER AMOUNT BY CUSTOMER ")
+spark.sql("""
+    SELECT customer, SUM(amount) AS total_amount
+    FROM orders
+    GROUP BY customer
+""").show()
+
+
+# STEP 3: FILTERING AND ORDERING
+
+# Query 4: Orders over $100 sorted by amount descending
+print("\n ORDERS OVER $100 ")
+spark.sql("""
+    SELECT *
+    FROM orders
+    WHERE amount > 100
+    ORDER BY amount DESC
+""").show()
+
+
+# Query 5: Customers with more than one order
+print("\n CUSTOMERS WITH MORE THAN ONE ORDER")
+spark.sql("""
+    SELECT customer, COUNT(*) AS order_count
+    FROM orders
+    GROUP BY customer
+    HAVING COUNT(*) > 1
+""").show()
+
+
+# STEP 4: TOP CUSTOMERS
+
+# Query 6: Top 3 customers by total order amount
+print("\n TOP 3 CUSTOMERS")
+spark.sql("""
+    SELECT customer, SUM(amount) AS total_amount
+    FROM orders
+    GROUP BY customer
+    ORDER BY total_amount DESC
+    LIMIT 3
+""").show()
+
+
+# Stop SparkSession
+spark.stop()
