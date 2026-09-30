@@ -1,6 +1,8 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import avg, desc, when, col
-
+## changew directory to the correct folder so that it will wun without errors:
+# cd /workspaces/PySpark-Transformations-and-Actions-Assignment/PySparkDFAssignment
+# #python PySparkDataFramesAssignment.py
 
 # Create SparkSession
 spark = SparkSession.builder \
